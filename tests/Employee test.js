@@ -1,40 +1,58 @@
 const Employee = require("../library/employee");
 
 describe("Employee", () => {
-  const name = "Tanna";
-  const id = 1;
-  const email = "tanna@pgLang.com";
-  const kendrick = new Employee(email, id, name);
-
-  test("new Employee instance's email should be set to pass in argument", () => {
-    expect(tanna.email).toBe(email);
+  it("Creating Employee Profile", () => {
+      const e = new Employee();
+      expect(typeof(e)).toBe("object");
   });
 
-  test("new Employee instance's id should be set to pass in argument", () => {
-    expect(tanna.id).toBe(id);
+  it("Let's get the person's email via the constructor", () => {
+    const testValue = "kendrick@pgLang.com";
+    const e = new Employee("Kendrick", 1, testValue);
+    expect(e.email).toBe(testValue);
+});
+
+it("Let's get the person's ID via the constructor", () => {
+  const testValue = 24;
+  const e = new Employee("Kendrick", testValue);
+  expect(e.id).toBe(testValue);
+});
+
+  it("Let's get the person's name via the constructor", () => {
+      const name = "Kendrick";
+      const e = new Employee(name);
+      expect(e.name).toBe(name);
   });
 
-  test("new Employee instance's name should be set to pass in argument", () => {
-    expect(tanna.name).toBe(name);
+  describe("getEmail", () => {
+    it("Let's get the person's via getEmail()", () => {
+        const testValue = "kendrick@pgLang.com";
+        const e = new Employee("Kendrick", 1, testValue);
+        expect(e.getEmail()).toBe(testValue);
+    });
+});
+      
+  describe("getID", () => {
+      it("Let's get the person's via getID()", () => {
+          const testValue = 24;
+          const e = new Employee("Kendrick", testValue);
+          expect(e.getID()).toBe(testValue);
+      });
   });
 
-  test("getEmail method should return employee's email", () => {
-    const tannaEmail = tanna.getEmail();
-    expect(tannaEmail).toBe(email);
-  });
+  describe("getName", () => {
+    it("Let's get the person's name via getName()", () => {
+        const testValue = "Kendrick";
+        const e = new Employee(testValue);
+        expect(e.getName()).toBe(testValue);
+    });
+});
 
-  test("getId method should return employee's id", () => {
-    const tannaId = tanna.getId();
-    expect(tannaId).toBe(id);
-  });
-
-  test("getName method should return employee's name", () => {
-    const tannaName = tanna.getName();
-    expect(tannaName).toBe(name);
-  });
-
-  test("getRole method should return 'Employee'", () => {
-    const tannaRole = tanna.getRole();
-    expect(tannaRole).toBe("Employee");
+  describe("getRole", () => {
+      it("getRole() should return \"Employee\"", () => {
+          const testValue = "Placeholder";
+          const e = new Employee("Kendrick", 1, "kendrick@pgLang.com");
+          expect(e.getRole()).toBe(testValue);
+      });
   });
 });

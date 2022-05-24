@@ -1,8 +1,8 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
+const Manager = require('./library/manager');
+const Engineer = require('./library/engineer');
+const Intern = require('./library/intern');
 
 const employees = [];
 
@@ -110,7 +110,7 @@ function startHtml() {
       href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./style.css"/>
     <title>My Team</title>
     <link
     rel="webtag icon"
@@ -123,7 +123,7 @@ function startHtml() {
     </nav>
         <div class="container">
             <div class="row">`;
-    fs.writeFile("./dist/index.html", html, err => {
+    fs.writeFile("./index.html", html, err => {
         if (err) {
             console.log(err);
         }
@@ -140,7 +140,7 @@ function addHtml(member) {
         const role = member.getRole();
         let data = "";
         if (role === "Engineer") {
-            const gitHub = member.getGithub();
+            const gitHub = member.getGitHub();
             data = `
             <div class="col table">
                 <div class="card  mb-3" style="width: 18rem">
@@ -178,7 +178,7 @@ function addHtml(member) {
             </div>
         </div>`
         }
-        fs.appendFile("./dist/index.html", data, (err) => {
+        fs.appendFile(".index.html", data, (err) => {
             if (err) {
                 return reject(err);
             };
@@ -189,12 +189,11 @@ function addHtml(member) {
 
 function finishHtml() {
     const html = ` </div>
-    </div>
-    
+    </div>\
 </body>
 </html>`;
 
-    fs.appendFile("./dist/index.html", html, (err) => {
+    fs.appendFile(".index.html", html, (err) => {
         if (err) {
             console.log(err);
         };
