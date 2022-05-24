@@ -123,7 +123,7 @@ function startHtml() {
     </nav>
         <div class="container">
             <div class="row">`;
-    fs.writeFile("./index.html", html, err => {
+    fs.writeFile("index.html", html, err => {
         if (err) {
             console.log(err);
         }
@@ -178,7 +178,7 @@ function addHtml(member) {
             </div>
         </div>`
         }
-        fs.appendFile(".index.html", data, (err) => {
+        fs.appendFile("index.html", data, (err) => {
             if (err) {
                 return reject(err);
             };
@@ -193,7 +193,7 @@ function finishHtml() {
 </body>
 </html>`;
 
-    fs.appendFile(".index.html", html, (err) => {
+    fs.appendFile("index.html", html, (err) => {
         if (err) {
             console.log(err);
         };
