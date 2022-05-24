@@ -1,9 +1,8 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
-const generateHTML = require("./src/utils/generateHTML");
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
 
 const employees = [];
 
@@ -14,147 +13,193 @@ function init() {
 }
 
 function addTeamMember() {
-  inquirer.prompt([
-  {
-        type: "input",
-        name: "name",
-        message: "Please enter the team member's name:",
-    },
-    {
-        type: "input",
-        name: "id",
-        message: "Please enter the team member's employee id:",
-    },
-    {
-        type: "list",
-        name: "role",
-        message: "Please select the team member's role:",
-        choices: [
-            "Intern",
-            "Engineer",
-            "Manager",
-        ],
-    },
-    {
-      type: "input",
-      name: "email"
-      message: "Please enter the team member's email:" 
-    }
-}])
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "Please enter the team member's name:",
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "Please enter the team member's employee id:",
+        },
+        {
+            type: "list",
+            name: "role",
+            message: "Please select the team member's role:",
+            choices: [
+                "Intern",
+                "Engineer",
+                "Manager",
+            ],
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "Please enter the team member's email:" 
+        }])
 
-.then(function ({ name, id, role, email }) {
-  let roleInfo = "";
-  if (role === "Intern") {
-    roleInfo = "college name";
-   } else if (role === "Engineer") {
-     roleInfo = "Github username";
-   } else (role === "Manager") {
-     roleInfo = "Office phone number";
-   });
+        .then(function ({ name, role, id, email }) {
+            let roleInfo = "";
+            if (role === "Engineer") {
+                roleInfo = "GitHub username";
+            } else if (role === "Intern") {
+                roleInfo = "school name";
+            } else {
+                roleInfo = "office phone #";
+            }
+            inquirer.prompt([{
+                message: `Please enter team member's ${roleInfo}: `,
+                name: "roleInfo"
+            },
+            {
+                type: "list",
+                message: "Would you like to add more people to your team?",
+                choices: [
+                    "yes",
+                    "no"
+                ],
+                name: "moreMembers",
+            }])
+                .then(function ({ roleInfo, moreMembers }) {
+                    let newMember = "";
+                    if (role === "Engineer") {
+                        newMember = new Engineer(name, id, email, roleInfo);
+                    } else if (role === "Intern") {
+                        newMember = new Intern(name, id, email, roleInfo);
+                    } else {
+                        newMember = new Manager(name, id, email, roleInfo);
+                    }
 
-.then(function({addInfo, addNewTeamMember}) 
-    {
-      let addTeamMember;
-      if (role === "Intern"){
-        addTeamMember = new Intern(name, id, role, email);
-      } else if (role === "Engineer"){
-        addTeamMember = new Intern(name, id, role, email);
-      } else (role === "Manager"){
-        addTeamMember = new Intern(name, id, role, email);
-      }
-      teammembers.push(addTeamMember);
-      addCard(addTeamMember).then(function() {
-        if (moreTeamMembers === "yes") {
-          addTeamMember();
-          } else {
-            endPage();
-          }
+                    employees.push(newMember);
+                    addHtml(newMember)
+                        .then(function () {
+                            if (moreMembers === "yes") {
+                                console.log("Let's add more team memebers!")
+                                addTeamMember();
+
+                            } else {
+                                finishHtml();
+                            }
+                        });
+
+                });
         });
-      });
-    });
-  }
+}
 
-  function topHTML() {
-        var html = `<!DOCTYPE html>
+function startHtml() {
+    const html = `<!DOCTYPE html>
     <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Team Generator</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link rel='stylesheet' href='./style.css'>
-    </head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>My Team</title>
+    <link
+    rel="webtag icon"
+    href="https://cdn0.iconfinder.com/data/icons/basic-ui-seo/64/users-512.png"
+    alt="team icon"
+  />
     <body>
-        <div class="container-fluid">
-            <div id='headerRow' class='row justify-content-md-center'>
-                <div class='col-12' id='header'>
-                    <p>My Team</p>
-                </div>
-            </div>
-            <div id='main' class='row justify-content-center'>
-        `;
-        //Takes the above text and throws it into an HTML
-        fs.writeFile("./dist/team.html", html, function(err) {
-            if (err) {
-                console.log(err)
-            }
-        })
-    }
+    <nav class="navbar mb-5">
+      <span class="navbar-brand mt-3 h1 w-100 text-center"><i class="bi bi-people-fill"></i>  My Team</span>
+    </nav>
+        <div class="container">
+            <div class="row">`;
+    fs.writeFile("./dist/index.html", html, err => {
+        if (err) {
+            console.log(err);
+        }
 
-        //More html to inject into the file before it is fully complete.
-        var cardHTML = `<div id='card' class='col-2'>
-        <div class='row align-items-center'>
-            <div id='cardHeader' class='col-12'>
-                <p class='name'>${name}</p>
-                <p class='position'>${role}</p>
+    });
+
+}
+
+function addHtml(member) {
+    return new Promise(function (resolve, reject) {
+        const email = member.getEmail();
+        const id = member.getId();
+        const name = member.getName();
+        const role = member.getRole();
+        let data = "";
+        if (role === "Engineer") {
+            const gitHub = member.getGithub();
+            data = `
+            <div class="col table">
+                <div class="card  mb-3" style="width: 18rem">
+                    <h5 class="card-header">${name}<br /><i class="bi bi-wrench">Engineer</i>
+                    </h5>
+                    <ul class="list-group list-group-flush">
+                       <li class="list-group-item"><i class="bi bi-person"></i>  ${id}</li>
+                       <li class="list-group-item"><i class="bi-mailbox"></i><a href="mailto: ${email}" target="_blank">  ${email}</a></li>
+                       <li class="list-group-item"><i class="bi-github" role="img" aria-label="GitHub"></i><a href="https://github.com/${gitHub}" target="_blank">  ${gitHub}</a></li>
+                    </ul>
+                </div>
+            </div>`;
+        } else if (role === "Intern") {
+            const school = member.getSchool();
+            data = `<div class="col table">
+            <div class="card mb-3" style="width: 18rem">
+                <h5 class="card-header">${name}<br><i class="bi bi-person-badge">Intern</i></h5>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="bi bi-person"></i>  ${id}</li>
+                <li class="list-group-item"><i class="bi-mailbox"></i><a href="mailto: ${email}" target="_blank">  ${email}</a></li>
+                    <li class="list-group-item"><i class="bi bi-book"></i>  ${school}</li>
+                </ul>
             </div>
-            <div id='cardBody' class='col-12'>
-                <div class='infodiv'>
-                    <p class='info'>ID: ${id}</p>
-                </div>
-                <div class='infodiv'>
-                    <p class='info'>Email: <a href="mailto:${email}">${email}</a></p>
-                </div>
-                <div class='infodiv'>
-                    <p class='info'>${special}</p>
-                </div>
+        </div>`;
+        } else {
+            const officePhone = member.getOfficeNumber();
+            data = `<div class="col table">
+            <div class="card mb-3" style="width: 18rem">
+                <h5 class="card-header">${name}<br /><i class="bi bi-bookmark-star-fill"> Manager</i></h5>
+                  <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><i class="bi bi-person"></i>  ${id}</li>
+                  <li class="list-group-item"><i class="bi-mailbox"></i><a href="mailto: ${email}" target="_blank">  ${email}</a></li>
+                    <li class="list-group-item"><i class="bi bi-telephone"></i>  ${officePhone}</li>
+                  </ul>
             </div>
-        </div>
+        </div>`
+        }
+        fs.appendFile("./dist/index.html", data, (err) => {
+            if (err) {
+                return reject(err);
+            };
+            return resolve();
+        });
+    });
+}
+
+function finishHtml() {
+    const html = ` </div>
     </div>
-        `
-        fs.appendFile("./dist/team.html", cardHTML, function(err) {
-            if (err) {
-                console.log(err)
-            }
-        })
-    }
     
-    function bottomHTML() {
-    
-        //Final bit of html to close off div elements in addition to scripts
-        var html = `</div>
-        </div>
-        <!-- Scripts for Bootstrap -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-            crossorigin="anonymous"></script>
-    </body>
-    </html>
-        `
-        fs.appendFile("./dist/team.html", html, function(err) {
-            if (err) {
-                console.log(err)
-            }
-        })
-    }
+</body>
+</html>`;
+
+    fs.appendFile("./dist/index.html", html, (err) => {
+        if (err) {
+            console.log(err);
+        };
+    });
+    console.log("Congrats! Your team profile has been created!");
+}
 
 init();
