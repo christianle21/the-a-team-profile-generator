@@ -1,13 +1,13 @@
 const Intern = require("../library/intern");
 
-describe('intern test', () => {
-  test('it test getSchool()', () => {
-      const intern = new Intern('Christian', '619', 'christian@pleasehire.com', 'SDSU')
-      expect(intern.getSchool()).toBe('UW')
+describe('Intern test', () => {
+  test('Intern test getSchool()', () => {
+      const intern = new Intern('christian@pleasehire.com', '619', 'Christian', 'SDSU')
+      expect(intern.getSchool()).toBe('SDSU')
 
   })
-  test('ntern test getRole()', () => {
-      const intern = new Intern('Christian', '619', 'christian@pleasehire.com', 'SDSU')
+  test('Intern test getRole()', () => {
+      const intern = new Intern('christian@pleasehire.com', '619', 'Christian', 'SDSU')
       expect(intern.getRole()).toBe('Intern')
 
   })
