@@ -40,7 +40,7 @@ function addTeamMember() {
             message: "Please enter the team member's email:" 
         }])
 
-        .then(function ({ name, role, id, email }) {
+        .then(function ({ email, id, name, role }) {
             let roleInfo = "";
             if (role === "Engineer") {
                 roleInfo = "GitHub username";
@@ -65,11 +65,11 @@ function addTeamMember() {
                 .then(function ({ roleInfo, moreMembers }) {
                     let newMember = "";
                     if (role === "Engineer") {
-                        newMember = new Engineer(name, id, email, roleInfo);
+                        newMember = new Engineer(email, id, name, roleInfo);
                     } else if (role === "Intern") {
-                        newMember = new Intern(name, id, email, roleInfo);
+                        newMember = new Intern(email, id, name, roleInfo);
                     } else {
-                        newMember = new Manager(name, id, email, roleInfo);
+                        newMember = new Manager(email, id, name, roleInfo);
                     }
 
                     employees.push(newMember);

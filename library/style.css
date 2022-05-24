@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "PT Sans", sans-serif;
+}
+
+.navbar {
+  background-color: rgb(44, 44, 44);
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+
+span.navbar-brand {
+  font-size: 2em;
+  letter-spacing: 0.085em;
+}
+
+.bi.bi-people-fill {
+  margin-right: 10px;
+}
+
+.card {
+  background-color: rgb(137, 245, 236);
+  box-shadow: 10px 7px 5px gray;
+}
+
+.card-header {
+  color: rgb(82, 82, 82);
+  text-align: center;
+  font-weight: 500;
+}
+
+.table {
+  display: flex;
+  justify-content: space-around;
+}
+
+.bi.bi-person,
+.bi-mailbox,
+.bi.bi-telephone,
+.bi-github,
+.bi.bi-book {
+  margin-right: 10px;
+}
+
+.list-group .list-group-item {
+  color: rgb(82, 82, 82);
+}

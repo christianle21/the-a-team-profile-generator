@@ -1,19 +1,14 @@
 const Engineer = require("../library/engineer");
 
-test("Let's get the employee's github username via the extended constructor", () => {
-  const testValue = "Kendrick";
-  const e = new Engineer("Kendrick", 1, "kendrick@pgLang.com", testValue);
-  expect(e.github).toBe(testValue);
-});
+describe('engineer test', () => {
+  test('Engineer test getGithub()', () => {
+      const engineer = new Engineer('Christian', '619', 'christian@pleasehire.com', 'Christianle21')
+      expect(engineer.getGithub()).toBe('Christianle21')
 
-test("getRole() should return 'Engineer'", () => {
-  const testValue = "Engineer";
-  const e = new Engineer("Kendrick", 1, "kendrick@pgLang.com", "GitHubUser");
-  expect(e.getRole()).toBe(testValue);
-});
+  })
+  test('Engineer test getRole()', () => {
+      const engineer = new Engineer('Christian', '619', 'christian@pleasehire.com', 'Christianle21')
+      expect(engineer.getRole()).toBe('Engineer')
 
-test("Let's get their GitHub username via getGitHub()", () => {
-  const testValue = "Kendrick";
-  const e = new Engineer("Kendrick", 1, "kendrick@pgLang.com", testValue);
-  expect(e.getGitHub()).toBe(testValue);
-});
+  })
+})

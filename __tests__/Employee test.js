@@ -1,58 +1,23 @@
 const Employee = require("../library/employee");
 
-describe("Employee", () => {
-  it("Creating Employee Profile", () => {
-      const e = new Employee();
-      expect(typeof(e)).toBe("object");
-  });
+describe('Employee test', () => {
+  test('Employee test getName()', () => {
+      const employee = new Employee('Christian', '619', 'christian@pleasehire.com')
+      expect(employee.getName()).toBe('Christian')
+  })
+  test('Employee test getId()', () => {
+      const employee = new Employee('Christian', '619', 'christian@pleasehire.com')
+      expect(employee.getId()).toBe('619')
 
-  it("Let's get the person's email via the constructor", () => {
-    const testValue = "kendrick@pgLang.com";
-    const e = new Employee("Kendrick", 1, testValue);
-    expect(e.email).toBe(testValue);
-});
+  })
+  test('Employee test getEmail()', () => {
+      const employee = new Employee('Christian', '619', 'christian@pleasehire.com')
+      expect(employee.getEmail()).toBe('christian@pleasehire.com')
 
-it("Let's get the person's ID via the constructor", () => {
-  const testValue = 24;
-  const e = new Employee("Kendrick", testValue);
-  expect(e.id).toBe(testValue);
-});
+  })
+  test('Employee test getRole()', () => {
+      const employee = new Employee('Christian', '619', 'christian@pleasehire.com')
+      expect(employee.getRole()).toBe('Employee')
 
-  it("Let's get the person's name via the constructor", () => {
-      const name = "Kendrick";
-      const e = new Employee(name);
-      expect(e.name).toBe(name);
-  });
-
-  describe("getEmail", () => {
-    it("Let's get the person's via getEmail()", () => {
-        const testValue = "kendrick@pgLang.com";
-        const e = new Employee("Kendrick", 1, testValue);
-        expect(e.getEmail()).toBe(testValue);
-    });
-});
-      
-  describe("getID", () => {
-      it("Let's get the person's via getID()", () => {
-          const testValue = 24;
-          const e = new Employee("Kendrick", testValue);
-          expect(e.getID()).toBe(testValue);
-      });
-  });
-
-  describe("getName", () => {
-    it("Let's get the person's name via getName()", () => {
-        const testValue = "Kendrick";
-        const e = new Employee(testValue);
-        expect(e.getName()).toBe(testValue);
-    });
-});
-
-  describe("getRole", () => {
-      it("getRole() should return \"Employee\"", () => {
-          const testValue = "Placeholder";
-          const e = new Employee("Kendrick", 1, "kendrick@pgLang.com");
-          expect(e.getRole()).toBe(testValue);
-      });
-  });
-});
+  })
+})
